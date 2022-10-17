@@ -10,3 +10,6 @@ export const deleteTrack = (id: string) => {
 
 export const addTrack = (params: any) =>
   makeRequest({ url: 'tracks', method: 'post', data: params });
+
+export const getTrack = (trackId: string) =>
+  makeRequest({ url: `tracks/${trackId}` });

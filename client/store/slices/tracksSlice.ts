@@ -1,12 +1,13 @@
 import { ITrack, TracksState } from '../../types/track';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { deleteTrack, fetchTracks } from '../asyncThunks/fetchTracks';
+import { deleteTrack, fetchTracks, getTrack } from '../asyncThunks/fetchTracks';
 import { HYDRATE } from 'next-redux-wrapper';
 
 const initialState: TracksState = {
   tracks: [],
   error: '',
   loading: false,
+  currentTrack: null,
 };
 
 export const tracksSlice = createSlice({
@@ -20,6 +21,9 @@ export const tracksSlice = createSlice({
         ...state,
         ...action.payload.tracks,
       };
+    },
+    [getTrack.fulfilled.type]: (state, action) => {
+      state.currentTrack = action.payload;
     },
     [deleteTrack.fulfilled.type]: (
       state,

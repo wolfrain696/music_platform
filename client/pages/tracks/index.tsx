@@ -35,7 +35,7 @@ const Index = () => {
             <h1>Track list</h1>
             <Button onClick={handleGoCreateTrackPage}>Upload</Button>
           </Grid>
-          <TracksList tracks={tracks} />
+          <TracksList />
         </StyledCard>
       </Grid>
     </MainLayout>

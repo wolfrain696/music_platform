@@ -1,1 +1,1 @@
-export { getTracks, deleteTrack, addTrack } from './tracks';
+export { getTracks, deleteTrack, addTrack, getTrack } from './tracks';

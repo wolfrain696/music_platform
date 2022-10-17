@@ -16,6 +16,7 @@ export interface ITrack {
 }
 
 export interface TracksState {
+  currentTrack: ITrack | null;
   tracks: ITrack[];
   error: string;
   loading: boolean;

@@ -12,6 +12,9 @@ import {
 } from '@mui/material';
 import { TrackImage } from '../../components/TrackImage/TrackImage';
 import styled from '@emotion/styled';
+import { useAppSelector } from '../../hooks/redux-hooks';
+import { AppThunk, wrapper } from '../../store';
+import { fetchTracks, getTrack } from '../../store/asyncThunks/fetchTracks';
 
 export const TrackPageContainer = styled(Grid)`
   gap: 24px;
@@ -20,19 +23,10 @@ export const TrackPageContainer = styled(Grid)`
 `;
 
 const TrackPage = () => {
+  const { currentTrack } = useAppSelector((state) => state.tracks);
   const router = useRouter();
   const handleGoToBack = () => {
     router.back();
-  };
-  const track: ITrack = {
-    _id: '6346b8be7b4ed3c6c7e5463f',
-    name: 'track 1',
-    artist: 'author 1 ',
-    text: 'text 1',
-    listens: 0,
-    picture: 'image/b782244c-1eb7-4c42-b559-e142b750583b.jpg',
-    audio: 'audio/22ca4902-5bb7-43d0-8566-fc70dd72dda7.mp3',
-    comments: [{ _id: '12312312123', userName: 'ruslan', text: 'gooood' }],
   };
   return (
     <MainLayout>
@@ -40,18 +34,20 @@ const TrackPage = () => {
         <BackIcon />
       </IconButton>
       <TrackPageContainer container>
-        <TrackImage src={'http://localhost:5000/' + track.picture} />
+        <TrackImage src={'http://localhost:5000/' + currentTrack?.picture} />
         <Box>
-          <Typography variant={'h3'}>{track.name}</Typography>
+          <Typography variant={'h3'}>{currentTrack?.name}</Typography>
           <Typography color="gray" variant={'h5'}>
-            {track.artist}
+            {currentTrack?.artist}
           </Typography>
-          <Typography variant={'body1'}>Listens: {track.listens}</Typography>
+          <Typography variant={'body1'}>
+            Listens: {currentTrack?.listens}
+          </Typography>
         </Box>
       </TrackPageContainer>
       <Box p={2}>
         <Typography variant={'h5'}>Lyrics :</Typography>
-        <Typography variant={'subtitle1'}>{track.text}</Typography>
+        <Typography variant={'subtitle1'}>{currentTrack?.text}</Typography>
       </Box>
       <Box p={2}>
         <Typography variant={'h5'}>Comments:</Typography>
@@ -62,8 +58,8 @@ const TrackPage = () => {
         </Grid>
       </Box>
       <Box p={2}>
-        {track.comments.map((comment) => (
-          <div>
+        {currentTrack?.comments.map((comment) => (
+          <div key={comment._id}>
             <Typography variant={'h5'}>{comment.userName}</Typography>
             <Typography variant={'subtitle1'}>{comment.text}</Typography>
           </div>
@@ -74,3 +70,16 @@ const TrackPage = () => {
 };
 
 export default TrackPage;
+
+export const getServerSideProps = wrapper.getServerSideProps(
+  (store) =>
+    async ({ params }) => {
+      const dispatch = store.dispatch as AppThunk;
+      if (params) {
+        await dispatch(await getTrack(params.id));
+      }
+      return {
+        props: {},
+      };
+    },
+);

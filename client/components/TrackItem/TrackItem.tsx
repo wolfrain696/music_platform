@@ -10,10 +10,10 @@ import {
   StyledTrackCard,
   StyledTrackContentWrapper,
 } from './styled';
-import { stopPropagation } from '../../utils/stopPropagation';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux-hooks';
 import { setActive, setPause, setPlay } from '../../store/slices/playerSlice';
 import { BaseSyntheticEvent } from 'react';
+import { getTime } from '../../utils/getTime';
 
 interface TrackItemProps {
   track: ITrack;
@@ -27,7 +27,9 @@ export const TrackItem: React.FC<TrackItemProps> = ({
   onDelete,
 }) => {
   const router = useRouter();
-  const {} = useAppSelector((state) => state.player);
+  const { pause, active, currentTime, duration } = useAppSelector(
+    (state) => state.player,
+  );
   const dispatch = useAppDispatch();
   const handleGoToTrack = () => {
     router.push(`/tracks/${track._id}`);
@@ -35,8 +37,14 @@ export const TrackItem: React.FC<TrackItemProps> = ({
 
   const handleSetPlay = (e: BaseSyntheticEvent) => {
     e.stopPropagation();
-    dispatch(setActive(track));
-    dispatch(setPause());
+    if (!active) {
+      dispatch(setActive(track));
+    }
+    if (pause) {
+      dispatch(setPlay());
+    } else {
+      dispatch(setPause());
+    }
   };
 
   const handleDeleteTrack = (e: BaseSyntheticEvent) => {
@@ -47,7 +55,7 @@ export const TrackItem: React.FC<TrackItemProps> = ({
   return (
     <StyledTrackCard onClick={handleGoToTrack}>
       <IconButton onClick={handleSetPlay}>
-        {trackActive ? <PauseIcon /> : <PlayIcon />}
+        {!pause ? <PauseIcon /> : <PlayIcon />}
       </IconButton>
       <StyleCardImage image={'http://localhost:5000/' + track.picture} />
       <StyledTrackContentWrapper>
@@ -56,7 +64,9 @@ export const TrackItem: React.FC<TrackItemProps> = ({
           {track.artist}
         </Typography>
       </StyledTrackContentWrapper>
-      {trackActive && <div> 02:34 / 03:42 </div>}
+      {trackActive && (
+        <div> {`${getTime(currentTime)} / ${getTime(duration)}`} </div>
+      )}
       <IconButton onClick={handleDeleteTrack} style={{ marginLeft: 'auto' }}>
         <Delete />
       </IconButton>

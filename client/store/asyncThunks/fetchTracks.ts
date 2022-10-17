@@ -40,3 +40,16 @@ export const createTrack = createAsyncThunk(
     }
   },
 );
+
+export const getTrack = createAsyncThunk(
+  'tracks/getTrack',
+  async (trackId: string, thunkAPI) => {
+    try {
+      const { data } = await tracksAPI.getTrack(trackId);
+      return data;
+    } catch (e: any) {
+      console.log(e.response.message);
+      return e.response.message;
+    }
+  },
+);

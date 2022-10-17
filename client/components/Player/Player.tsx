@@ -5,7 +5,6 @@ import PlayIcon from '@mui/icons-material/PlayCircle';
 import VolumeUp from '@mui/icons-material/VolumeUp';
 import * as React from 'react';
 import styled from '@emotion/styled';
-import { ITrack } from '../../types/track';
 import { TrackProgress } from '../TrackProgress/TrackProgress';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux-hooks';
 import {
@@ -16,18 +15,7 @@ import {
   setDuration,
 } from '../../store/slices/playerSlice';
 import { BaseSyntheticEvent, useEffect } from 'react';
-
-const StyledPlayerContainer = styled(Box)`
-  height: 68px;
-  width: 100%;
-  position: fixed;
-  bottom: 0;
-  padding: 0 12px;
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  background-color: lightgray;
-`;
+import { StyledPlayerContainer } from './styled';
 
 let audio: HTMLAudioElement | undefined;
 
@@ -46,6 +34,14 @@ export const Player = () => {
     }
   }, [active]);
 
+  useEffect(() => {
+    if (pause) {
+      audio?.play();
+    } else {
+      audio?.pause();
+    }
+  }, [pause]);
+
   const handleSetAudio = () => {
     if (!active || !audio) return;
     audio.src = 'http://localhost:5000/' + active.audio;
@@ -62,10 +58,8 @@ export const Player = () => {
     if (!audio) return;
     if (pause) {
       dispatch(setPlay());
-      audio.play();
     } else {
       dispatch(setPause());
-      audio.pause();
     }
   };
   const handleChangeVolume = (e: BaseSyntheticEvent) => {
