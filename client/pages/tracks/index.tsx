@@ -48,7 +48,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
   (store) => async (params) => {
     const dispatch = store.dispatch as AppThunk;
     await dispatch(await fetchTracks());
-    console.log('даааааа бля ');
 
     return {
       props: {},

@@ -25,14 +25,12 @@ export const tracksSlice = createSlice({
       state,
       { payload }: PayloadAction<ITrack[]>,
     ) => {
-      console.log(payload);
       return { ...state };
     },
     [fetchTracks.fulfilled.type]: (
       state,
       { payload }: PayloadAction<ITrack[]>,
     ) => {
-      console.log('heeeeee', payload);
       state.error = '';
       state.tracks = payload;
       state.loading = false;

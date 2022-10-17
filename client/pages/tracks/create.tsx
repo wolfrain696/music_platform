@@ -7,8 +7,9 @@ import { FileUpload } from '../../components/FileUpload/FileUpload';
 import { useInput } from '../../hooks/useInput';
 import { useAppDispatch } from '../../hooks/redux-hooks';
 import { AppThunk } from '../../store';
-import { tracksAPI } from '../../api';
 import { createTrack } from '../../store/asyncThunks/fetchTracks';
+import { TrackImage } from '../../components/TrackImage/TrackImage';
+import { useRouter } from 'next/router';
 
 const StyledStepContainer = styled(Grid)`
   flex-direction: column;
@@ -25,6 +26,7 @@ const Create = () => {
   const songName = useInput('');
   const authorName = useInput('');
   const text = useInput('');
+  const router = useRouter();
 
   const nextStep = () => {
     if (step !== 2) {
@@ -48,6 +50,7 @@ const Create = () => {
     formData.append('picture', picture);
     formData.append('audio', audio);
     dispatch(createTrack(formData));
+    router.back();
   };
 
   return (
@@ -61,21 +64,28 @@ const Create = () => {
           </StyledStepContainer>
         )}
         {step === 1 && (
-          <FileUpload setFile={setPicture} accept={'image/*'}>
-            <Button>Upload image</Button>
-          </FileUpload>
+          <StyledStepContainer container>
+            {picture && <TrackImage src={URL.createObjectURL(picture)} />}
+            <FileUpload setFile={setPicture} accept={'image/*'}>
+              <Button>Upload image</Button>
+            </FileUpload>
+          </StyledStepContainer>
         )}
         {step === 2 && (
-          <FileUpload setFile={setAudio} accept={'audio/*'}>
-            <Button>Upload song </Button>
-          </FileUpload>
+          <StyledStepContainer container>
+            <FileUpload setFile={setAudio} accept={'audio/*'}>
+              <Button>Upload song </Button>
+            </FileUpload>
+          </StyledStepContainer>
         )}
       </StepWrapper>
       <Grid container justifyContent={'space-between'}>
         <Button disabled={step === 0} onClick={backStep}>
           Back
         </Button>
-        <Button onClick={nextStep}>Next</Button>
+        <Button disabled={step === 2 && !audio} onClick={nextStep}>
+          Next
+        </Button>
       </Grid>
     </MainLayout>
   );

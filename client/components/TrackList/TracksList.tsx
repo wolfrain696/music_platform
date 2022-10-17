@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { ITrack } from '../../types/track';
 import { Box, Grid } from '@mui/material';
 import { TrackItem } from '../TrackItem/TrackItem';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux-hooks';
@@ -28,15 +27,3 @@ export const TracksList: React.FC = () => {
     </Grid>
   );
 };
-
-export const getServerSideProps = wrapper.getServerSideProps(
-  (store) => async (params) => {
-    console.log('даааааа бля ');
-
-    const dispatch = store.dispatch as AppThunk;
-    dispatch(fetchTracks());
-    return {
-      props: {},
-    };
-  },
-);
