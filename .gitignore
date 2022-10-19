@@ -1,9 +1,7 @@
 .idea
-/server/dist
 
 
 #server
-server/dist
 server/node_modules
 server/logs
 server/*.log
