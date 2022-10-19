@@ -15,6 +15,7 @@ import styled from '@emotion/styled';
 import { useAppSelector } from '../../hooks/redux-hooks';
 import { AppThunk, wrapper } from '../../store';
 import { fetchTracks, getTrack } from '../../store/asyncThunks/fetchTracks';
+import { isArray } from 'util';
 
 export const TrackPageContainer = styled(Grid)`
   gap: 24px;
@@ -73,11 +74,9 @@ export default TrackPage;
 
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
-    async ({ params }) => {
+    async ({ query }) => {
       const dispatch = store.dispatch as AppThunk;
-      if (params) {
-        await dispatch(await getTrack(params.id));
-      }
+      if (query.id) await dispatch(await getTrack(query.id.toString()));
       return {
         props: {},
       };

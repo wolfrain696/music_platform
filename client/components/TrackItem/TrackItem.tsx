@@ -37,7 +37,7 @@ export const TrackItem: React.FC<TrackItemProps> = ({
 
   const handleSetPlay = (e: BaseSyntheticEvent) => {
     e.stopPropagation();
-    if (!active) {
+    if (!trackActive) {
       dispatch(setActive(track));
     }
     if (pause) {
@@ -55,7 +55,7 @@ export const TrackItem: React.FC<TrackItemProps> = ({
   return (
     <StyledTrackCard onClick={handleGoToTrack}>
       <IconButton onClick={handleSetPlay}>
-        {!pause ? <PauseIcon /> : <PlayIcon />}
+        {pause && trackActive ? <PauseIcon /> : <PlayIcon />}
       </IconButton>
       <StyleCardImage image={'http://localhost:5000/' + track.picture} />
       <StyledTrackContentWrapper>

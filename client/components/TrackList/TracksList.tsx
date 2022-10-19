@@ -12,7 +12,6 @@ export const TracksList: React.FC = () => {
 
   const handleDeleteTrack = async (id: string) => {
     await dispatch(deleteTrack(id));
-    await dispatch(fetchTracks());
   };
   return (
     <Grid container direction={'column'}>

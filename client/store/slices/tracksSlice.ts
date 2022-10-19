@@ -27,9 +27,9 @@ export const tracksSlice = createSlice({
     },
     [deleteTrack.fulfilled.type]: (
       state,
-      { payload }: PayloadAction<ITrack[]>,
+      { payload }: PayloadAction<string>,
     ) => {
-      return { ...state };
+      state.tracks = state.tracks.filter((track) => track._id !== payload);
     },
     [fetchTracks.fulfilled.type]: (
       state,

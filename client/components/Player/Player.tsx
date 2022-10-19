@@ -74,7 +74,7 @@ export const Player = () => {
   return (
     <StyledPlayerContainer>
       <IconButton onClick={handlePlay}>
-        {!pause ? <PauseIcon /> : <PlayIcon />}
+        {pause ? <PauseIcon /> : <PlayIcon />}
       </IconButton>
       <Grid>
         <Typography>{active?.name}</Typography>
