@@ -16,15 +16,21 @@ export class TrackService {
   ) {}
 
   async create(dto: CreateTrackDto, picture, audio): Promise<Track> {
-    const audioPath = this.fileService.createFile(FileType.AUDIO, audio);
-    const picturePath = this.fileService.createFile(FileType.IMAGE, picture);
-    const track = await this.trackModel.create({
-      ...dto,
-      listens: 0,
-      audio: audioPath,
-      picture: picturePath,
-    });
-    return track;
+    try {
+      const audioPath = this.fileService.createFile(FileType.AUDIO, audio);
+      const picturePath = this.fileService.createFile(FileType.IMAGE, picture);
+      const track = await this.trackModel.create({
+        ...dto,
+        listens: 0,
+        audio: audioPath,
+        picture: picturePath,
+      });
+      return track;
+    } catch (e) {
+      console.log(e)
+      throw new Error(e)
+    }
+
   }
   async getAll(count = 10, offset = 0): Promise<Track[]> {
     const tracks = await this.trackModel
