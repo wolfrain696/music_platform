@@ -12,10 +12,12 @@ export enum FileType {
 export class FileService {
   createFile(type: FileType, file): string {
     try {
-      console.log(file);
       const fileExtension = file.originalname.split('.').pop();
       const fileName = uuid.v4() + '.' + fileExtension;
       const filePath = path.resolve(__dirname, '..', 'static', type);
+      console.log(filePath);
+      console.log(__dirname);
+
       if (!fs.existsSync(filePath)) {
         fs.mkdirSync(filePath, { recursive: true });
       }
