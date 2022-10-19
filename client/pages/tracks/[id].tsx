@@ -15,7 +15,7 @@ import styled from '@emotion/styled';
 import { useAppSelector } from '../../hooks/redux-hooks';
 import { AppThunk, wrapper } from '../../store';
 import { fetchTracks, getTrack } from '../../store/asyncThunks/fetchTracks';
-import { isArray } from 'util';
+import { baseUrlApi } from '../../constants';
 
 export const TrackPageContainer = styled(Grid)`
   gap: 24px;
@@ -35,7 +35,7 @@ const TrackPage = () => {
         <BackIcon />
       </IconButton>
       <TrackPageContainer container>
-        <TrackImage src={'http://localhost:5000/' + currentTrack?.picture} />
+        <TrackImage src={baseUrlApi + currentTrack?.picture} />
         <Box>
           <Typography variant={'h3'}>{currentTrack?.name}</Typography>
           <Typography color="gray" variant={'h5'}>

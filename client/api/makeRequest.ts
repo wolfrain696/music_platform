@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { processEnv } from '@next/env';
+import { baseUrlApi } from '../constants';
 
 interface IRequest {
   url: string;
@@ -16,7 +17,7 @@ export default ({
   headers = {},
   data = {},
 }: IRequest) => {
-  const requestUrl = 'http://localhost:5000/' + url;
+  const requestUrl = baseUrlApi + url;
   return axios({ url: requestUrl, method, params, headers, data }).catch(
     (error) => {
       throw error;

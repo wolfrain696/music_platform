@@ -14,6 +14,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks/redux-hooks';
 import { setActive, setPause, setPlay } from '../../store/slices/playerSlice';
 import { BaseSyntheticEvent } from 'react';
 import { getTime } from '../../utils/getTime';
+import { baseUrlApi } from '../../constants';
 
 interface TrackItemProps {
   track: ITrack;
@@ -57,7 +58,7 @@ export const TrackItem: React.FC<TrackItemProps> = ({
       <IconButton onClick={handleSetPlay}>
         {pause && trackActive ? <PauseIcon /> : <PlayIcon />}
       </IconButton>
-      <StyleCardImage image={'http://localhost:5000/' + track.picture} />
+      <StyleCardImage image={baseUrlApi + track.picture} />
       <StyledTrackContentWrapper>
         <Typography>{track.name}</Typography>
         <Typography fontSize={12} color={'gray'}>
