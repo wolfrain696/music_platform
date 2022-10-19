@@ -12,9 +12,9 @@ const StyledCard = styled(Card)`
   padding: 0 16px;
 `;
 
-const Index = () => {
+export default function Index() {
   const router = useRouter();
-  const { tracks, error } = useAppSelector((state) => state.tracks);
+  const { error } = useAppSelector((state) => state.tracks);
   const handleGoCreateTrackPage = () => {
     router.push('/tracks/create');
   };
@@ -40,9 +40,7 @@ const Index = () => {
       </Grid>
     </MainLayout>
   );
-};
-
-export default Index;
+}
 
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) => async (params) => {
