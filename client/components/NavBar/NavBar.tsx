@@ -61,12 +61,14 @@ export default function NavBar() {
           <List>
             {navRouters.map(({ path, icon, label }) => (
               <Link key={path} href={path}>
-                <ListItem disablePadding>
-                  <ListItemButton>
-                    <ListItemIcon>{icon}</ListItemIcon>
-                    <ListItemText primary={label} />
-                  </ListItemButton>
-                </ListItem>
+                <a>
+                  <ListItem disablePadding>
+                    <ListItemButton>
+                      <ListItemIcon>{icon}</ListItemIcon>
+                      <ListItemText primary={label} />
+                    </ListItemButton>
+                  </ListItem>
+                </a>
               </Link>
             ))}
           </List>
