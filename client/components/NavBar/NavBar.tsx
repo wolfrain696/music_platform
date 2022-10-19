@@ -10,8 +10,6 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
 import MenuIcon from '@mui/icons-material/Menu';
 import { IconButton } from '@mui/material';
 import { useState } from 'react';
@@ -20,7 +18,6 @@ import AudioTrackIcon from '@mui/icons-material/Audiotrack';
 import HomeIcon from '@mui/icons-material/Home';
 import AlbumIcon from '@mui/icons-material/Album';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 
 export const StyledSideBar = styled(Drawer)`
   & .MuiDrawer-paper {
@@ -41,7 +38,6 @@ const navRouters = [
 
 export default function NavBar() {
   const [open, setOpen] = useState(false);
-  const router = useRouter();
   const handleDrawerOpen = () => {
     setOpen(!open);
   };
@@ -64,16 +60,14 @@ export default function NavBar() {
         <Box>
           <List>
             {navRouters.map(({ path, icon, label }) => (
-              <ListItem
-                key={path}
-                disablePadding
-                onClick={() => router.push(path)}
-              >
-                <ListItemButton>
-                  <ListItemIcon>{icon}</ListItemIcon>
-                  <ListItemText primary={label} />
-                </ListItemButton>
-              </ListItem>
+              <Link key={path} href={path}>
+                <ListItem disablePadding>
+                  <ListItemButton>
+                    <ListItemIcon>{icon}</ListItemIcon>
+                    <ListItemText primary={label} />
+                  </ListItemButton>
+                </ListItem>
+              </Link>
             ))}
           </List>
         </Box>

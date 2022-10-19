@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import MainLayout from '../../layouts/MainLayout';
-import { ITrack } from '../../types/track';
+
 import BackIcon from '@mui/icons-material/ArrowBack';
 import {
   IconButton,
@@ -14,7 +14,7 @@ import { TrackImage } from '../../components/TrackImage/TrackImage';
 import styled from '@emotion/styled';
 import { useAppSelector } from '../../hooks/redux-hooks';
 import { AppThunk, wrapper } from '../../store';
-import { fetchTracks, getTrack } from '../../store/asyncThunks/fetchTracks';
+import { getTrack } from '../../store/asyncThunks/fetchTracks';
 import { baseUrlApi } from '../../constants';
 
 export const TrackPageContainer = styled(Grid)`
