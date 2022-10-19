@@ -1,18 +1,18 @@
-import MainLayout from '../layouts/MainLayout';
+import MainLayout from '../../layouts/MainLayout';
 import { Card, Grid, Button } from '@mui/material';
 import styled from '@emotion/styled';
 import { useRouter } from 'next/router';
-import { TracksList } from '../components/TrackList/TracksList';
-import { useAppSelector } from '../hooks/redux-hooks';
-import { fetchTracks } from '../store/asyncThunks/fetchTracks';
-import { AppThunk, wrapper } from '../store';
+import { TracksList } from '../../components/TrackList/TracksList';
+import { useAppSelector } from '../../hooks/redux-hooks';
+import { fetchTracks } from '../../store/asyncThunks/fetchTracks';
+import { AppThunk, wrapper } from '../../store';
 
 const StyledCard = styled(Card)`
   width: 900px;
   padding: 0 16px;
 `;
 
-export default function Tracks() {
+const Index = () => {
   const router = useRouter();
   const { error } = useAppSelector((state) => state.tracks);
   const handleGoCreateTrackPage = () => {
@@ -40,7 +40,9 @@ export default function Tracks() {
       </Grid>
     </MainLayout>
   );
-}
+};
+
+export default Index;
 
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) => async (params) => {
