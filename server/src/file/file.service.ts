@@ -15,8 +15,8 @@ export class FileService {
       const fileExtension = file.originalname.split('.').pop();
       const fileName = uuid.v4() + '.' + fileExtension;
       const filePath = path.resolve(__dirname, '..', 'static', type);
-      console.log(fs.readdirSync('../'));
-      console.log(fs.readdirSync('../../'));
+      console.log(fs.readdirSync(__dirname + '../'));
+      console.log(fs.readdirSync(path.resolve(__dirname, '..')));
       console.log(fs.existsSync(filePath))
       if (!fs.existsSync(filePath)) {
         console.log(fs.existsSync(filePath))
