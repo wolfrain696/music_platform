@@ -15,10 +15,12 @@ export class FileService {
       const fileExtension = file.originalname.split('.').pop();
       const fileName = uuid.v4() + '.' + fileExtension;
       const filePath = path.resolve(__dirname, '..', 'static', type);
-      console.log(fs.readdirSync(__dirname))
+      console.log(fs.readdirSync('../'));
+      console.log(fs.readdirSync('../../'));
+      console.log(fs.existsSync(filePath))
       if (!fs.existsSync(filePath)) {
-        fs.mkdirSync(filePath, { recursive: true });
         console.log(fs.existsSync(filePath))
+        fs.mkdirSync(filePath, { recursive: true });
       }
       console.log(path.resolve(filePath, fileName))
       fs.writeFileSync(path.resolve(filePath, fileName), file.buffer);
